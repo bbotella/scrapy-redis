@@ -6,9 +6,9 @@ from scrapy_redis.dupefilter import RFPDupeFilter
 
 # default values
 SCHEDULER_PERSIST = False
-QUEUE_KEY = '%(spider)s:requests'
+QUEUE_KEY = '%(spider.domain)s:requests'
 QUEUE_CLASS = 'scrapy_redis.queue.SpiderPriorityQueue'
-DUPEFILTER_KEY = '%(spider)s:dupefilter'
+DUPEFILTER_KEY = '%(spider.domain)s:dupefilter'
 IDLE_BEFORE_CLOSE = 0
 
 
@@ -58,7 +58,7 @@ class Scheduler(object):
     def open(self, spider):
         self.spider = spider
         self.queue = self.queue_cls(self.server, spider, self.queue_key)
-        self.df = RFPDupeFilter(self.server, self.dupefilter_key % {'spider': spider.name})
+        self.df = RFPDupeFilter(self.server, self.dupefilter_key % {'spider.domain': spider.domain})
         if self.idle_before_close < 0:
             self.idle_before_close = 0
         # notice if there are requests already in the queue to resume the crawl

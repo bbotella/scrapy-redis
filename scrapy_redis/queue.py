@@ -19,7 +19,7 @@ class Base(object):
         """
         self.server = server
         self.spider = spider
-        self.key = key % {'spider': spider.name}
+        self.key = key % {'spider.domain': spider.domain}
 
     def _encode_request(self, request):
         """Encode a request object"""
